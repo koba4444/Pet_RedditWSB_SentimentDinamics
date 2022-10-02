@@ -29,11 +29,12 @@ def init_dag(dag, task_id):
             #bash_command=f'echo st.title(\'My first app  111\') > {filename}.py; git push --amend -a origin petproject')
             bash_command = f' cd  /streamlit; '
                             f' echo {dt} >> newfile.py;'
-                            f' git add newfile.py;'
-                            f' git add main.py;'
-                            f' git add ./pages/;'
+                            f' git checkout petproject;'
+                           f' git add newfile.py;'
+                            #f' git add main.py;'
+                            #f' git add ./pages/;'
                             f' git commit -m "newfile_{dt}" 2>>commiterrors.txt;'
-                            f' git remote add origin git@github.com:koba4444/streamlit_test20220914.git;'
+                            #f' git remote add origin git@github.com:koba4444/streamlit_test20220914.git;'
                             f' git push origin master; '
         )
         #bash_command=f'python3 "$(pwd)"/src/{task_id}.py')
