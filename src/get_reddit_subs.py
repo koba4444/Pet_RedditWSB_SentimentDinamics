@@ -117,35 +117,7 @@ requests.get('https://oauth.reddit.com/api/v1/me', headers=headers)
 
 
 params = {'limit': 100}
-iterations = [{"cur_iter": 0, "SUBREDDIT": "wallstreetbets", "SUB_TYPE": "new", "params": {'limit': 100}},
-"""
-            {"cur_iter": 0, "SUBREDDIT": "wallstreetbets", "SUB_TYPE": "top", "params": {'limit': 100}},
-
-            {"cur_iter": 0, "SUBREDDIT": "wallstreetbets", "SUB_TYPE": "rising", "params": {'limit': 100}},
-            {"cur_iter": 0, "SUBREDDIT": "wallstreetbets", "SUB_TYPE": "hot", "params": {'limit': 100}},
- 
-              {"cur_iter": 0, "SUBREDDIT": "BBIG", "SUB_TYPE": "top", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "BBIG", "SUB_TYPE": "rising", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "BBIG", "SUB_TYPE": "hot", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "BBIG", "SUB_TYPE": "new", "params": {'limit': 100}},
-            {"cur_iter": 0, "SUBREDDIT": "Superstonk", "SUB_TYPE": "top", "params": {'limit': 100}},
-            {"cur_iter": 0, "SUBREDDIT": "Superstonk", "SUB_TYPE": "rising", "params": {'limit': 100}},
-            {"cur_iter": 0, "SUBREDDIT": "Superstonk", "SUB_TYPE": "hot", "params": {'limit': 100}},
-            {"cur_iter": 0, "SUBREDDIT": "Superstonk", "SUB_TYPE": "new", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "amcstock", "SUB_TYPE": "top", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "amcstock", "SUB_TYPE": "rising", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "amcstock", "SUB_TYPE": "hot", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "amcstock", "SUB_TYPE": "new", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "KOSSstock", "SUB_TYPE": "top", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "KOSSstock", "SUB_TYPE": "rising", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "KOSSstock", "SUB_TYPE": "hot", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "KOSSstock", "SUB_TYPE": "new", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "CLOV", "SUB_TYPE": "top", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "CLOV", "SUB_TYPE": "rising", "params": {'limit': 100}},
-              {"cur_iter": 0, "SUBREDDIT": "CLOV", "SUB_TYPE": "hot", "params": {'limit': 100}},
-"""
-              {"cur_iter": 0, "SUBREDDIT": "CLOV", "SUB_TYPE": "new", "params": {'limit': 100}}
-              ]
+iterations = [{"cur_iter": 0, "SUBREDDIT": "wallstreetbets", "SUB_TYPE": "new", "params": {'limit': 100}}]
 
 
 
@@ -153,10 +125,12 @@ iterations = [{"cur_iter": 0, "SUBREDDIT": "wallstreetbets", "SUB_TYPE": "new", 
 NOW = str(dt.now())
 HUNDREDS = 15000000
 ind = 0
-while True:
+step = 0
+while True and step < 10:
     NOW = str(dt.now())
     serve_cycle(iterations[ind])
     ind = (ind + 1) % len(iterations)
+    step += 1
     time.sleep(3)
 
 

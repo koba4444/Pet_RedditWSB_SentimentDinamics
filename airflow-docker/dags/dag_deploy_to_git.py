@@ -26,10 +26,10 @@ def init_dag(dag, task_id):
         #print(filename)
         t1 = BashOperator(
             task_id=f"{task_id}",
-            #bash_command=f'echo st.title(\'My first app  111\') > {filename}.py; git push --amend -a origin petproject')
-            bash_command = f' cd  /streamlit; '
-                            f' git checkout main;'
-                            f' echo {dt} 20221102 >> newfile.py;'
+            bash_command = f'cd  /streamlit; '
+                            f'git checkout main;'
+                            f'python3 ../src/get_reddit_subs.py')
+                            f'python3 ../src/predict_and_loadtoStreamlit.py')
                             f' git add output.csv;'
                             f' git add main.py;'
                             f' git add ./pages/;'  
