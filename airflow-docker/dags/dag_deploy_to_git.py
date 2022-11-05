@@ -30,7 +30,7 @@ def init_dag(dag, task_id):
             bash_command = f' cd  /streamlit; '
                             f' git checkout main;'
                             f' echo {dt} 20221102 >> newfile.py;'
-                            f' git add newfile.py;'
+                            f' git add output.csv;'
                             f' git add main.py;'
                             f' git add ./pages/;'  
                              f'git config --global user.email "you@example.com";'
