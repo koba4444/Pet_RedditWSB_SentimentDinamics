@@ -135,7 +135,7 @@ prometheus-flask-exporter
 proto-plus
 protobuf
 psutil
-psycopg2-binary
+psycopg2
 py
 pyarrow
 pyasn1
@@ -179,6 +179,7 @@ SQLAlchemy-JSONField
 SQLAlchemy-Utils
 sqlparse
 sshtunnel
+streamlit
 stringcase
 swagger-ui-bundle
 tabulate
