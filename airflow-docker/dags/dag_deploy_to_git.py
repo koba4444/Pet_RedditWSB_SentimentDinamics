@@ -14,7 +14,7 @@ default_args = {
     "task_concurency": 1  # одновременно только 1 таск
 }
 
-piplines = {'commit_amend_data_to_github': {"schedule": "*/2 * * * *"}
+piplines = {'commit_amend_data_to_github': {"schedule": "*/15 * * * *"}
             #'commit_amend_data_to_github': {"schedule": "*/20 15-18 * * *"}
             #"mr_get_reddit_subs1": {"schedule": "/10 * * * *"}
                     }
@@ -29,11 +29,15 @@ def init_dag(dag, task_id):
             #bash_command=f'echo st.title(\'My first app  111\') > {filename}.py; git push --amend -a origin petproject')
             bash_command = f' cd  /streamlit; '
                             f' git checkout main;'
-                            f' echo {dt} >> newfile.py;'
+                            f' echo {dt} 20221102 >> newfile.py;'
                             f' git add newfile.py;'
                             f' git add main.py;'
-                            f' git add ./pages/;'                            f' git commit -m "newfile_{dt}" 2>>commiterrors.txt;'
-                            #f' git remote add origin git@github.com:koba4444/streamlit_test20220914.git;'
+                            f' git add ./pages/;'  
+                             f'git config --global user.email "you@example.com";'
+                                f'git config --global user.name "Your Name";'
+                           f'git config --global --add safe.directory /streamlit;'
+                           f' git commit -m "newfile_{dt}" 2>>commiterrors.txt;'
+                            f' git remote add origin git@github.com:koba4444/streamlit_test20220914.git;'
                             f' git push origin main; '
 
 
