@@ -27,5 +27,5 @@ RUN apt-get -y install iputils-ping
 
 EXPOSE 8080
 RUN airflow db init
-RUN airflow users create -u admin -f Peter -l Parker -r Admin -e spiderman@superhero.org -p admin
+RUN airflow users create -u admin -f Ivan -l Petrov -r Admin -e rosinant@donkihotoff.org -p admin
 CMD airflow standalone
