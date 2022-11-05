@@ -15,6 +15,7 @@ Babel
 bcrypt
 cached-property
 cachetools
+catboost
 cattrs
 certifi
 cffi

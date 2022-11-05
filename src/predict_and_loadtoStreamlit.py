@@ -17,7 +17,7 @@ df=df[['created_utc', 'text']]
 
 
 model = CatBoostClassifier()      # parameters not required.
-model.load_model('cb_model_0.7933.cbm')
+model.load_model('../src/cb_model_0.7933.cbm')
 df['OriginalTweet'] = df['text']
 
 test_pool = Pool(
@@ -40,3 +40,4 @@ df.reset_index(drop=True)
 output = pd.concat([df.groupby('date').mean('predict').reset_index(drop=False),
                    df.groupby('date').count().reset_index(drop=False)['text']], axis=1)
 output.to_csv('../streamlit/output.csv')
+print('success')
