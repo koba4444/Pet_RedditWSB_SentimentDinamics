@@ -2,18 +2,20 @@ import numpy as np
 from catboost import CatBoostClassifier, Pool
 import pandas as pd
 import os
-from catboost import CatBoostClassifier
+
 MEME = ['UPST','PTON','AMC','COIN','SNAP','NIO','PLTR','DKNG',
         'HOOD','TLRY','RKLB','BB','MRNA','ZIM','GME','BBIG','KOSS','EXPR','','','','',]
 df = pd.read_csv(os.path.join("../data/r_wallstreetbets_new_2022.csv"))
+df = df.drop_duplicates()
+df.to_csv(os.path.join("../data/r_wallstreetbets_new_2022.csv"))
 
-columns=['created_utc', 'title','selftext']
+columns=['created_utc', 'title', 'selftext']
 df = df.fillna('')
 df = df[columns].astype(str)
 
 df['text'] = df['title'] + df['selftext']
-df = df.drop_duplicates()
-df=df[['created_utc', 'text']]
+
+df = df[['created_utc', 'text']]
 
 
 model = CatBoostClassifier()      # parameters not required.
