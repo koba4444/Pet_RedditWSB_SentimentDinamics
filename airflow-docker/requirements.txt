@@ -128,6 +128,7 @@ pandas
 pandas-gbq
 paramiko
 pendulum
+plost
 pluggy
 prison
 prometheus-client
@@ -135,7 +136,7 @@ prometheus-flask-exporter
 proto-plus
 protobuf
 psutil
-psycopg2
+psycopg2-binary
 py
 pyarrow
 pyasn1
@@ -179,7 +180,6 @@ SQLAlchemy-JSONField
 SQLAlchemy-Utils
 sqlparse
 sshtunnel
-streamlit
 stringcase
 swagger-ui-bundle
 tabulate

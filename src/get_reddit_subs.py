@@ -81,7 +81,7 @@ def serve_cycle(iter_dict):
 
         # append new_df to data
         #data = data.append(new_df, ignore_index=True)
-        new_df.to_csv(f"../data/r_{SUBREDDIT}_{SUB_TYPE}_" + NOW[:4] + ".csv", mode="a")
+        new_df.to_csv(f"../data/r_{SUBREDDIT}_{SUB_TYPE}_" + NOW[:4] + ".csv", mode="a", sep='\t', index=False)
         print(res.headers['x-ratelimit-remaining'],
                 res.headers['x-ratelimit-used'],
                 res.headers['x-ratelimit-reset'], dt.now())
@@ -126,7 +126,7 @@ NOW = str(dt.now())
 HUNDREDS = 15000000
 ind = 0
 step = 0
-while True and step < 10:
+while True and step < 2:
     NOW = str(dt.now())
     serve_cycle(iterations[ind])
     ind = (ind + 1) % len(iterations)

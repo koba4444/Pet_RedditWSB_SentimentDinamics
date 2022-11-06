@@ -10,10 +10,9 @@ import pydeck as pdk
 import streamlit as st
 
 def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
     import streamlit as st
-    st.title('My first app  111')
+    st.title('Wallstreetbet subreddit sentiment dinamics')
     st.write("""
                 #My app
                 Hello *world!*/n

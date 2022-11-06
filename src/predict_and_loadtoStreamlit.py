@@ -5,9 +5,9 @@ import os
 
 MEME = ['UPST','PTON','AMC','COIN','SNAP','NIO','PLTR','DKNG',
         'HOOD','TLRY','RKLB','BB','MRNA','ZIM','GME','BBIG','KOSS','EXPR','','','','',]
-df = pd.read_csv(os.path.join("../data/r_wallstreetbets_new_2022.csv"))
-df = df.drop_duplicates()
-df.to_csv(os.path.join("../data/r_wallstreetbets_new_2022.csv"))
+df = pd.read_csv(os.path.join("../data/r_wallstreetbets_new_2022.csv"), sep='\t')
+df = df.drop_duplicates(subset=['title'])
+df.to_csv(os.path.join("../data/r_wallstreetbets_new_2022.csv"),sep='\t', index=False)
 
 columns=['created_utc', 'title', 'selftext']
 df = df.fillna('')
@@ -24,7 +24,6 @@ df['OriginalTweet'] = df['text']
 
 test_pool = Pool(
     data=df[['OriginalTweet']],
-    #label=df['Sentiment_predict'],
     text_features=['OriginalTweet']
 )
 
