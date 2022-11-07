@@ -14,7 +14,7 @@ default_args = {
     "task_concurency": 1  # одновременно только 1 таск
 }
 
-piplines = {'commit_amend_data_to_github': {"schedule": "*/60 * * * *"}
+piplines = {'commit_amend_data_to_github': {"schedule": "*/5 * * * *"}
             #'commit_amend_data_to_github': {"schedule": "*/20 15-18 * * *"}
             #"mr_get_reddit_subs1": {"schedule": "/10 * * * *"}
                     }

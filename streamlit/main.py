@@ -16,8 +16,8 @@ def wsb_sentiment():
     print(os.curdir)
 
     col1, col2 = st.columns([1,2])
-
-    col1.markdown(' # Wallstreetbet subreddit sentiment dynamics')
+    st.title(" # Wallstreetbet subreddit sentiment dynamics")
+    st.(' # Wallstreetbet subreddit sentiment dynamics')
     col1.markdown("""
                 Know what is sentiment on r/wallstreetbet - subreddit witn 13 mln readers
             """)
