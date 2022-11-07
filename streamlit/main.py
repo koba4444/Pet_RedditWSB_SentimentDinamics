@@ -21,7 +21,7 @@ def wsb_sentiment():
     col1.markdown("""
                 Know what is sentiment on r/wallstreetbet - subreddit witn 13 mln readers
             """)
-    col1.metric(label="Sent value", val=3, delta=-1)
+    col1.metric(label="Sent value", val="3", delta="-1")
 
     df = pd.DataFrame(
         np.random.randn(100, 2) / [0.5, 0.5] + [55.5, 37.33],
