@@ -196,6 +196,8 @@ typing-inspect
 unicodecsv
 uritemplate
 urllib3
+utils
+vega_datasets
 websocket-client
 Werkzeug
 wrapt
