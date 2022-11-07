@@ -9,21 +9,18 @@ import pandas as pd
 import pydeck as pdk
 import streamlit as st
 
-
-
-def wsb_sentiment():
-    data = pd.read_csv('output.csv')
-
-    col1, col2, col3 = st.columns([1,3])
-
-    col1.markdown(' # Wallstreetbet subreddit sentiment dynamics')
-    col1.markdown("""
-                Know what is sentiment on r/wallstreetbet - subreddit witn 13 mln readers
+def print_hi(name):
+    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    import streamlit as st
+    st.title('Wallstreetbet subreddit sentiment dinamics')
+    st.write("""
+                #My app
+                Hello *world!*/n
+                ##l;skjgirnigs
             """)
-    col1.metric(label="Sent value", val=3, delta=-1)
 
     chart_data = pd.DataFrame(
-        data,
+        np.random.randn(20, 3),
         columns=['a', 'b', 'c'])
 
     st.line_chart(chart_data)
@@ -104,7 +101,7 @@ def wsb_sentiment():
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    wsb_sentiment()
+    print_hi('PyCharm')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 #

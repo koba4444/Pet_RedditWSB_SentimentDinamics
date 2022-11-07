@@ -1,23 +1,3 @@
-SUBJECT.
-January 2021 was somewhat splendid on Wall Street because of events connected with so called MEME stocks (GME, AMC, EXPR, MULN etc.).
-Retail traders cooperated via social networks (subreddit r/whallstreetbets) have managed to oppose to hedge funds in their short sell play.
-As a result several stocks briefly soared 10X - 40X.
-January 2021 showed that sentiment analysis of retail investor groups will be of rising interest.
-This tiny pet-project is for demonstrating sentiment dinamics in r/whallstreetbets almost real time.
-
-DATA.
-Data for the project are taken from Reddit.com. It consists of post texts along with timestamps.
-
-
-MODEL.
-For sentiment determining catboost model trained on datasets (https://www.kaggle.com/datasets/datatattle/covid-19-nlp-text-classification) is useds.
-It was showed in https://towardsdatascience.com/unconventional-sentiment-analysis-bert-vs-catboost-90645f2437a9 that catboost model works as well as BERT but is much lighter. 
-
-
-ETL
-Controllers are in docker containers. Data is received on hourly basis, preprocessed. Result is pushed to github repository connected with Streamlit service. 
-
-
 1. AIRFLOW
 
 Сборка образа (из дирректории /airflow-docker)
