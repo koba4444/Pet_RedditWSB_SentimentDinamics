@@ -23,12 +23,6 @@ def wsb_sentiment():
             """)
     col1.metric(label="Sent value", val=3, delta=-1)
 
-    chart_data = pd.DataFrame(
-        [1,2,3],
-        columns=['date', 'predict'])
-
-    st.line_chart(chart_data)
-
     df = pd.DataFrame(
         np.random.randn(100, 2) / [0.5, 0.5] + [55.5, 37.33],
         columns=['lat', 'lon'])
