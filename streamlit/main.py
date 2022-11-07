@@ -12,9 +12,9 @@ import streamlit as st
 
 
 def wsb_sentiment():
-    data = pd.read_csv('output.csv')
+    data = pd.read_csv('./output.csv')
 
-    col1, col2, col3 = st.columns([1,3])
+    col1, col2 = st.columns([1,2])
 
     col1.markdown(' # Wallstreetbet subreddit sentiment dynamics')
     col1.markdown("""
@@ -24,7 +24,7 @@ def wsb_sentiment():
 
     chart_data = pd.DataFrame(
         data,
-        columns=['a', 'b', 'c'])
+        columns=['date', 'predict'])
 
     st.line_chart(chart_data)
 
