@@ -4,7 +4,7 @@
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 import numpy as np
-
+import os
 import pandas as pd
 import pydeck as pdk
 import streamlit as st
@@ -12,7 +12,8 @@ import streamlit as st
 
 
 def wsb_sentiment():
-    data = pd.read_csv('./output.csv')
+    #data = pd.read_csv('./output.csv')
+    print(os.curdir)
 
     col1, col2 = st.columns([1,2])
 
@@ -23,7 +24,7 @@ def wsb_sentiment():
     col1.metric(label="Sent value", val=3, delta=-1)
 
     chart_data = pd.DataFrame(
-        data,
+        [1,2,3],
         columns=['date', 'predict'])
 
     st.line_chart(chart_data)
