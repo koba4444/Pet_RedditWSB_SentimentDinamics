@@ -112,9 +112,6 @@ headers = {**headers, **{'Authorization': f"bearer {TOKEN}"}}
 requests.get('https://oauth.reddit.com/api/v1/me', headers=headers)
 
 #===================================
-#data = pd.DataFrame()
-
-
 
 params = {'limit': 100}
 iterations = [{"cur_iter": 0, "SUBREDDIT": "wallstreetbets", "SUB_TYPE": "new", "params": {'limit': 100}}]
