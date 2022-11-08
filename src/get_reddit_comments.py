@@ -5,29 +5,57 @@ import time
 
 
 # we use this function to convert responses to dataframes
-def df_from_response(res):
+def df_from_response(res, parent_title='', parent_selftext=''):
     # initialize temp dataframe for batch of data in response
     df = pd.DataFrame()
-
     # loop through each post pulled from res and append to df
-    for post in res.json()['data']['children']:
-
-        df = df.append({
-            'subreddit': post['data']['subreddit'],
-            'author': post['data']['author'],
-            'domain': post['data']['domain'],
-            'num_comments': post['data']['num_comments'],
-            'title': post['data']['title'],
-            'selftext': post['data']['selftext'],
-            'upvote_ratio': post['data']['upvote_ratio'],
-            'ups': post['data']['ups'],
-            'downs': post['data']['downs'],
-            'score': post['data']['score'],
-            'link_flair_css_class': post['data']['link_flair_css_class'],
-            'created_utc': dt.fromtimestamp(post['data']['created_utc']).strftime('%Y-%m-%dT%H:%M:%SZ'),
+    r_json = res.json()
+    if type(r_json) == dict:
+        range_to_look_through = r_json['data']['children']
+    else:
+        l = len(r_json)
+        range_to_look_through = r_json[l-1]['data']['children']
+    for post in range_to_look_through:
+        if 'created_utc'  not in post['data'].keys(): break
+        _dict = {'subreddit': post['data']['subreddit'] if 'subreddit' in post['data'].keys() else '',
+            'author': post['data']['author'] if 'author' in post['data'].keys() else '',
+            'domain': post['data']['domain'] if 'domain' in post['data'].keys() else '',
+            'num_comments': post['data']['num_comments'] if 'num_comments' in post['data'].keys() else '',
+            'title': post['data']['title'] if 'title' in post['data'].keys() else '',
+            'selftext': post['data']['selftext'] if 'selftext' in post['data'].keys() else
+                            parent_title + parent_selftext + post['data']['body'] if 'body' in post['data'].keys() else '',
+            'upvote_ratio': post['data']['upvote_ratio'] if 'upvote_ratio' in post['data'].keys() else '',
+            'ups': post['data']['ups'] if 'ups' in post['data'].keys() else '',
+            'downs': post['data']['downs'] if 'downs' in post['data'].keys() else '',
+            'score': post['data']['score'] if 'score' in post['data'].keys() else '',
+            'link_flair_css_class': post['data']['link_flair_css_class'] if 'link_flair_css_class' in post['data'].keys() else '',
+            'created_utc': dt.fromtimestamp(post['data']['created_utc']).strftime('%Y-%m-%dT%H:%M:%SZ')
+                        if 'created_utc' in post['data'].keys() else '',
             'id': post['data']['id'],
-            'kind': post['kind']
+            'kind': post['kind'] if 'kind' in post.keys() else ''
+            }
+        df = pd.concat([df, pd.DataFrame([_dict])]) if len(df.values) != 0 else pd.DataFrame([_dict])
+
+        """
+        df = df.append({
+            'subreddit': post['data']['subreddit'] if 'subreddit' in post['data'].keys() else '',
+            'author': post['data']['author'] if 'author' in post['data'].keys() else '',
+            'domain': post['data']['domain'] if 'domain' in post['data'].keys() else '',
+            'num_comments': post['data']['num_comments'] if 'num_comments' in post['data'].keys() else '',
+            'title': post['data']['title'] if 'title' in post['data'].keys() else '',
+            'selftext': post['data']['selftext'] if 'selftext' in post['data'].keys() else
+                            post['data']['body'] if 'body' in post['data'].keys() else '',
+            'upvote_ratio': post['data']['upvote_ratio'] if 'upvote_ratio' in post['data'].keys() else '',
+            'ups': post['data']['ups'] if 'ups' in post['data'].keys() else '',
+            'downs': post['data']['downs'] if 'downs' in post['data'].keys() else '',
+            'score': post['data']['score'] if 'score' in post['data'].keys() else '',
+            'link_flair_css_class': post['data']['link_flair_css_class'] if 'link_flair_css_class' in post['data'].keys() else '',
+            'created_utc': dt.fromtimestamp(post['data']['created_utc']).strftime('%Y-%m-%dT%H:%M:%SZ')
+                        if 'created_utc' in post['data'].keys() else '',
+            'id': post['data']['id'],
+            'kind': post['kind'] if 'kind' in post.keys() else ''
         }, ignore_index=True)
+        """
     return df
 
 def serve_cycle(iter_dict):
@@ -35,8 +63,12 @@ def serve_cycle(iter_dict):
     SUBREDDIT = iter_dict["SUBREDDIT"]
     SUB_TYPE = iter_dict["SUB_TYPE"]
     fullname_for_before_movement = None
+    df_comment = pd.DataFrame()
     for i in range(iter_dict["cur_iter"], HUNDREDS):
         # make request
+
+
+
         res = requests.get(f"https://oauth.reddit.com/r/{SUBREDDIT}/{SUB_TYPE}",
                            headers=headers,
                            params=params)
@@ -45,8 +77,13 @@ def serve_cycle(iter_dict):
         new_df = df_from_response(res)
         # take the final row (oldest entry)
         print(i, len(new_df))
+
+
+
+
         if i == 0 and "before" not in params.keys():
             row = new_df.iloc[0]
+
             fullname_for_before_movement = row['kind'] + '_' + row['id']
             row = new_df.iloc[len(new_df) - 1]
             fullname = row['kind'] + '_' + row['id']
@@ -78,6 +115,15 @@ def serve_cycle(iter_dict):
         # create fullname
 
         print(fullname)
+
+        # +++++++++++++++++++++++++++++++++++++
+        # try to get comments for post from the first row
+        for _, r in new_df.iterrows():
+            res_comment = requests.get(f"https://oauth.reddit.com/comments/{r['id']}",
+                                       headers=headers,
+                                       params=params)
+            df_comment = pd.concat([df_comment,df_from_response(res_comment, r['title'], r['selftext'])])
+
 
         # append new_df to data
         #data = data.append(new_df, ignore_index=True)
