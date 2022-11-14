@@ -2,9 +2,11 @@ import numpy as np
 from catboost import CatBoostClassifier, Pool
 import pandas as pd
 import os
-
 MEME = ['UPST','PTON','AMC','COIN','SNAP','NIO','PLTR','DKNG',
-        'HOOD','TLRY','RKLB','BB','MRNA','ZIM','GME','BBIG','KOSS','EXPR','','','','',]
+        'HOOD','TLRY','RKLB','BB','MRNA','ZIM','GME','BBIG',
+        'KOSS','EXPR','SPY','BBBY','CLOV','ORA','WDR', 'TDC', 'SNBR', 'THS', 'BLKB', 'UIS', 'PCRX', 'INFN', 'FGEN',
+        'ALTR', 'TDS', 'NOK', 'JBT', 'FUBO', 'BLNK', 'MEGL', 'DDS', 'MULN', '--ALL TICKERS']
+
 df = pd.read_csv(os.path.join("../data/r_wallstreetbets_new_2022.csv"), sep='\t')
 df = df.drop_duplicates(subset=['title'])
 df.to_csv(os.path.join("../data/r_wallstreetbets_new_2022.csv"),sep='\t', index=False)

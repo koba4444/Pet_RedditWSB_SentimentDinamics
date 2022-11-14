@@ -17,13 +17,15 @@ def df_from_response(res, parent_title='', parent_selftext=''):
         range_to_look_through = r_json[l-1]['data']['children']
     for post in range_to_look_through:
         if 'created_utc'  not in post['data'].keys(): break
+
         _dict = {'subreddit': post['data']['subreddit'] if 'subreddit' in post['data'].keys() else '',
             'author': post['data']['author'] if 'author' in post['data'].keys() else '',
             'domain': post['data']['domain'] if 'domain' in post['data'].keys() else '',
             'num_comments': post['data']['num_comments'] if 'num_comments' in post['data'].keys() else '',
-            'title': post['data']['title'] if 'title' in post['data'].keys() else '',
-            'selftext': post['data']['selftext'] if 'selftext' in post['data'].keys() else
-                            parent_title + parent_selftext + post['data']['body'] if 'body' in post['data'].keys() else '',
+            'title': post['data']['title'].lower() if 'title' in post['data'].keys() else '',
+            'selftext': post['data']['selftext'].lower() if 'selftext' in post['data'].keys() else
+                            parent_title + parent_selftext + post['data']['body'].lower()
+                            if 'body' in post['data'].keys() else '',
             'upvote_ratio': post['data']['upvote_ratio'] if 'upvote_ratio' in post['data'].keys() else '',
             'ups': post['data']['ups'] if 'ups' in post['data'].keys() else '',
             'downs': post['data']['downs'] if 'downs' in post['data'].keys() else '',
@@ -34,28 +36,10 @@ def df_from_response(res, parent_title='', parent_selftext=''):
             'id': post['data']['id'],
             'kind': post['kind'] if 'kind' in post.keys() else ''
             }
+        #skip short comments (<30 symbols)
+        if (len(_dict['selftext']) - len(parent_title) - len(parent_selftext) < 30 and
+            len(parent_title) + len(parent_selftext) > 0): break
         df = pd.concat([df, pd.DataFrame([_dict])]) if len(df.values) != 0 else pd.DataFrame([_dict])
-
-        """
-        df = df.append({
-            'subreddit': post['data']['subreddit'] if 'subreddit' in post['data'].keys() else '',
-            'author': post['data']['author'] if 'author' in post['data'].keys() else '',
-            'domain': post['data']['domain'] if 'domain' in post['data'].keys() else '',
-            'num_comments': post['data']['num_comments'] if 'num_comments' in post['data'].keys() else '',
-            'title': post['data']['title'] if 'title' in post['data'].keys() else '',
-            'selftext': post['data']['selftext'] if 'selftext' in post['data'].keys() else
-                            post['data']['body'] if 'body' in post['data'].keys() else '',
-            'upvote_ratio': post['data']['upvote_ratio'] if 'upvote_ratio' in post['data'].keys() else '',
-            'ups': post['data']['ups'] if 'ups' in post['data'].keys() else '',
-            'downs': post['data']['downs'] if 'downs' in post['data'].keys() else '',
-            'score': post['data']['score'] if 'score' in post['data'].keys() else '',
-            'link_flair_css_class': post['data']['link_flair_css_class'] if 'link_flair_css_class' in post['data'].keys() else '',
-            'created_utc': dt.fromtimestamp(post['data']['created_utc']).strftime('%Y-%m-%dT%H:%M:%SZ')
-                        if 'created_utc' in post['data'].keys() else '',
-            'id': post['data']['id'],
-            'kind': post['kind'] if 'kind' in post.keys() else ''
-        }, ignore_index=True)
-        """
     return df
 
 def serve_cycle(iter_dict):
@@ -127,6 +111,7 @@ def serve_cycle(iter_dict):
 
         # append new_df to data
         #data = data.append(new_df, ignore_index=True)
+        df_comment.to_csv(f"../data/comment_{SUBREDDIT}_{SUB_TYPE}_" + NOW[:4] + ".csv", mode="a", sep='\t', index=False)
         new_df.to_csv(f"../data/r_{SUBREDDIT}_{SUB_TYPE}_" + NOW[:4] + ".csv", mode="a", sep='\t', index=False)
         print(res.headers['x-ratelimit-remaining'],
                 res.headers['x-ratelimit-used'],
